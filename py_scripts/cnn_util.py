@@ -1,16 +1,17 @@
 import numpy as np
 
 params = {
-    'Input dimension': 8,
+    'Input rows': 32,
+    'Input cols': 32,
     'Input min value': 0,
     'Input max value': 10,
     'Output folder': './'
 }
 
 
-def generate_input(dimension, low, high, v_type=float):
+def generate_input(nRows, nCols, low, high, v_type=float):
     return np.array(
-        [v_type(x) for x in np.random.uniform(low=low, high=high, size=dimension * dimension)]
+        [v_type(x) for x in np.random.uniform(low=low, high=high, size=nRows * nCols)]
     )
 
 
@@ -21,9 +22,9 @@ def get_user_param(msg, default):
         return default
 
 
-def generate_kernel(dimension=3, low=-1, high=1):
+def generate_weights(nRows, nCols, low=-1, high=1):
     return np.array(
-        [i for i in np.random.uniform(low=low, high=high, size=dimension * dimension)]
+        [i for i in np.random.uniform(low=low, high=high, size=nRows * nCols)]
     )
 
 

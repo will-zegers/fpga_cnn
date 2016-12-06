@@ -23,9 +23,10 @@ if __name__ == '__main__':
     CHANNEL_CNT = 3
 
     params.update({
-        'Kernel dimension': 3,
-        'Kernel min value': -1,
-        'Kernel max value': 1,
+        'Weights rows': 5,
+        'Weights cols': 5,
+        'Weights min value': -1,
+        'Weights max value': 1,
         'Bias': 0,
         'Stride': 2,
         'Padding': 0,
@@ -37,7 +38,8 @@ if __name__ == '__main__':
     channels = []
     for i in range(CHANNEL_CNT):
         channels.append(generate_input(
-            params['Input dimension'],
+            params['Input rows'],
+            params['Input cols'],
             params['Input min value'],
             params['Input max value'],
             v_type=int)
@@ -45,10 +47,11 @@ if __name__ == '__main__':
 
     filters = []
     for i in range(CHANNEL_CNT):
-        filters.append(generate_kernel(
-            params['Kernel dimension'],
-            params['Kernel min value'],
-            params['Kernel max value']
+        filters.append(generate_weights(
+            params['Weights rows'],
+            params['Weights cols'],
+            params['Weights min value'],
+            params['Weights max value']
         ))
 
     golden = generate_golden(convolution_layer, channels, filters, params['Stride'], params['Padding'], params['Bias'])

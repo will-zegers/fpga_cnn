@@ -5,7 +5,8 @@ from cnn_funcs import convolve
 if __name__ == '__main__':
 
     params.update({
-        'Kernel dimension': 3,
+        'Weights rows': 5,
+        'Weights cols': 5,
         'Kernel min value': -1,
         'Kernel max value': 1,
         'Bias': 1,
@@ -17,14 +18,16 @@ if __name__ == '__main__':
         params[key] = get_user_param(key, params[key])
 
     X = generate_input(
-        params['Input dimension'],
+        params['Input rows'],
+        params['Input cols'],
         params['Input min value'],
         params['Input max value'],
         v_type=int
     )
 
-    weights = generate_kernel(
-        params['Kernel dimension'],
+    weights = generate_weights(
+        params['Weights rows'],
+        params['Weights cols'],
         params['Kernel min value'],
         params['Kernel max value']
     )
