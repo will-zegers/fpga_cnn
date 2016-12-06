@@ -7,8 +7,8 @@ def convolve(X, weights, stride=1, pad=0):
 
     i_rows = params['Input rows']
     i_cols = params['Input cols']
-    w_rows = params['Weight rows']
-    w_cols = params['Weight cols']
+    w_rows = params['Weights rows']
+    w_cols = params['Weights cols']
 
     X = np.reshape(X, (i_rows, i_cols))
     weights = np.reshape(weights, (w_rows, w_cols))

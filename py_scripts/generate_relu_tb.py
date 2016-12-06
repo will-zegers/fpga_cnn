@@ -14,7 +14,8 @@ if __name__ == '__main__':
         params[key] = get_user_param(key, params[key])
 
     X = generate_input(
-        params['Input dimension'],
+        params['Input rows'],
+        params['Input cols'],
         params['Input min value'],
         params['Input max value'],
         v_type=float

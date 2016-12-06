@@ -32,7 +32,7 @@ if __name__ == '__main__':
     golden = generate_golden(
         pool,
         X,
-        params['Input dimension'],
+        params['Pool dimension'],
         params['Stride'],
         funcdict[params['Pooling function']]
     )

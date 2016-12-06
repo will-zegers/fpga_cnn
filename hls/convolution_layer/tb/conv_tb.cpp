@@ -72,15 +72,22 @@ int main() {
 	}
 	fclose(fp);
 
-	printf("RMSE: %0.15f\n", rmse.error);
-	success = !(rmse.error < ERROR_THRESHOLD);
 
-	fprintf(stdout, "*******************************************\n");
-	if (success == 0) {
-		fprintf(stdout, "PASS: The output matches the golden output!\n");
-	} else {
+	// printing error results
+	printf("----------------------------------------------\n");
+	printf("   RMSE(R)");
+	printf("%0.15f\n", rmse.error);
+	printf("----------------------------------------------\n");
+
+	if (rmse.error > 0.1) {
+		fprintf(stdout, "*******************************************\n");
 		fprintf(stdout, "FAIL: Output DOES NOT match the golden output\n");
+		fprintf(stdout, "*******************************************\n");
+	    return 1;
+	}else {
+		fprintf(stdout, "*******************************************\n");
+		fprintf(stdout, "PASS: The output matches the golden output!\n");
+		fprintf(stdout, "*******************************************\n");
+	    return 0;
 	}
-	fprintf(stdout, "*******************************************\n");
-	return success;
 }

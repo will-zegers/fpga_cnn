@@ -6,8 +6,8 @@
 #define STRIDE 1
 #define CHANNEL_COUNT 3
 
-#define X_DMNIN 8
-#define W_DMNIN 3
+#define X_DMNIN 32
+#define W_DMNIN 5
 #define Y_DMNIN ((X_DMNIN-W_DMNIN)/STRIDE+1)
 
 #define X_SIZE X_DMNIN*X_DMNIN

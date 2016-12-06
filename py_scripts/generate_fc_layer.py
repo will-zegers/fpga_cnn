@@ -6,7 +6,7 @@ if __name__ == '__main__':
 
     params.update({
         'Weights rows': 400,
-        'Weights cols': 84,
+        'Weights cols': 120,
         'Weights min value': -1,
         'Weights max value': 1,
     })
