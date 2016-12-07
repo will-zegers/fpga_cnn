@@ -11,7 +11,7 @@ struct Rmse
 
 	Rmse(){ num_sq = 0; sum_sq = 0; error = 0; }
 
-	float add_value(Y_TYPE d_n)
+	float add_value(OUTP_TYPE d_n)
 	{
 		num_sq++;
 		sum_sq += (float)(d_n*d_n);
@@ -23,42 +23,59 @@ struct Rmse
 Rmse rmse;
 
 int main() {
+	int r, c;
 	int success;
 	const float ERROR_THRESHOLD = 1e-3;
-	X_TYPE channels[CHANNEL_COUNT][X_SIZE];
-	W_TYPE filters[CHANNEL_COUNT][W_SIZE];
-	Y_TYPE out[Y_SIZE], gold;
+	INPT_TYPE channels[N_CHNLS][X_ROWS][X_COLS];
+	WGHT_TYPE filters[N_CHNLS][W_ROWS][W_COLS];
+	OUTP_TYPE out[Y_ROWS][Y_COLS], gold;
 	FILE *fp;
 
 	fp = fopen("channel0.dat", "r");
-	for (int i = 0; i < X_SIZE; ++i) {
-		fscanf(fp, "%d\n", &channels[0][i]);
+	for (r = 0; r < X_ROWS; ++r) {
+		for (c = 0; c < X_COLS; ++c) {
+			fscanf(fp, "%f\n", &channels[0][r][c]);
+		}
 	}
 	fclose(fp);
+
 	fp = fopen("channel1.dat", "r");
-	for (int i = 0; i < X_SIZE; ++i) {
-		fscanf(fp, "%d\n", &channels[1][i]);
+	for (r = 0; r < X_ROWS; ++r) {
+		for (c = 0; c < X_COLS; ++c) {
+			fscanf(fp, "%f\n", &channels[1][r][c]);
+		}
 	}
 	fclose(fp);
+
 	fp = fopen("channel2.dat", "r");
-	for (int i = 0; i < X_SIZE; ++i) {
-		fscanf(fp, "%d\n", &channels[2][i]);
+	for (r = 0; r < X_ROWS; ++r) {
+		for (c = 0; c < X_COLS; ++c) {
+			fscanf(fp, "%f\n", &channels[2][r][c]);
+		}
 	}
 	fclose(fp);
 
 	fp = fopen("filter0.dat", "r");
-	for (int i = 0; i < W_SIZE; ++i) {
-		fscanf(fp, "%f\n", &filters[0][i]);
+	for (r = 0; r < W_ROWS; ++r) {
+		for (c = 0; c < W_COLS; ++c) {
+			fscanf(fp, "%f\n", &filters[0][r][c]);
+		}
 	}
 	fclose(fp);
+
 	fp = fopen("filter1.dat", "r");
-	for (int i = 0; i < W_SIZE; ++i) {
-		fscanf(fp, "%f\n", &filters[1][i]);
+	for (r = 0; r < W_ROWS; ++r) {
+		for (c = 0; c < W_COLS; ++c) {
+			fscanf(fp, "%f\n", &filters[1][r][c]);
+		}
 	}
 	fclose(fp);
+
 	fp = fopen("filter2.dat", "r");
-	for (int i = 0; i < W_SIZE; ++i) {
-		fscanf(fp, "%f\n", &filters[2][i]);
+	for (r = 0; r < W_ROWS; ++r) {
+		for (c = 0; c < W_COLS; ++c) {
+			fscanf(fp, "%f\n", &filters[2][r][c]);
+		}
 	}
 	fclose(fp);
 
@@ -66,9 +83,12 @@ int main() {
 
 	printf("Comparing with golden output\n");
 	fp = fopen("out.gold.dat", "r");
-	for (int i=0; i < Y_SIZE; ++i) {
-		fscanf(fp, "%f\n", &gold);
-		rmse.add_value(out[i] - gold);
+	for (r = 0; r < Y_ROWS; ++r) {
+		for (c = 0; c < Y_COLS; ++c) {
+			fscanf(fp, "%f\n", &gold);
+			printf("%f %f\n", out[r][c], gold);
+			rmse.add_value(out[r][c] - gold);
+		}
 	}
 	fclose(fp);
 

@@ -2,39 +2,39 @@
 #include "conv.h"
 
 void convolution_node(
-		X_TYPE channels[CHANNEL_COUNT][X_SIZE],
-		W_TYPE filters[CHANNEL_COUNT][W_SIZE],
-		Y_TYPE Y[Y_SIZE]) {
+		INPT_TYPE channels[N_CHNLS][X_ROWS][X_COLS],
+		WGHT_TYPE filters[N_CHNLS][W_ROWS][W_COLS],
+		OUTP_TYPE Y[Y_ROWS][Y_COLS]) {
 
-	int i;
+	int i, r, c;
 
-	for (i = 0; i < Y_SIZE; ++i) {
-		Y[i] = 0;
+	for (r = 0; r < Y_ROWS; ++r) {
+		for (c = 0; c < Y_COLS; ++c) {
+			Y[r][c] = 0;
+		}
 	}
 
-	for (i = 0; i < CHANNEL_COUNT; ++i) {
+	for (i = 0; i < N_CHNLS; ++i) {
 		convolve(channels[i], filters[i], Y);
 	}
 }
 
-void convolve(X_TYPE X[X_SIZE], W_TYPE weights[W_SIZE], Y_TYPE Y[Y_SIZE]) {
 
-	X_TYPE subX[W_SIZE];
+void convolve(
+		INPT_TYPE X[X_ROWS][X_COLS],
+		WGHT_TYPE W[W_ROWS][W_COLS],
+		OUTP_TYPE Y[Y_ROWS][Y_COLS]) {
 
-	int i,j,k;
-	int q,r,s,t;
+	int i, j, k, m;
 
-	t = 0;
-	for (k = 0; k <= X_DMNIN - W_DMNIN; k += STRIDE) {
-		for (q = 0; q <= X_DMNIN - W_DMNIN; q += STRIDE) {
-			s = 0;
-			for (i = k; i < k+W_DMNIN; ++i) {
-				for (r = q; r < q+W_DMNIN; ++r) {
-					Y[t] += X[X_DMNIN*i+r] * weights[s];
-					s++;
+	for (i = 0; i < X_ROWS - W_ROWS + 1; i += STRIDE) {
+		for (j = 0, k = 0, m = 0; j < X_COLS - W_COLS + 1; j += STRIDE) {
+		#pragma HLS PIPELINE
+			for (k = 0; k < W_ROWS; k += 1) {
+				for (m = 0; m < W_COLS; m += 1) {
+					Y[i][j] += X[i + k][m + j] * W[k][m];
 				}
 			}
-			t++;
 		}
 	}
 }

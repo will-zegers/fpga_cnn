@@ -29,23 +29,77 @@
  *
  *****************************************************************************/
 
-#ifndef MATRIX_MULTIPLY_H
-#define MATRIX_MULTIPLY_H
+#include <stdio.h>
+#include "linear.h"
+#include <math.h>
 
-#include "hls_linear_algebra.h"
+struct Rmse
+{
+	int num_sq;
+	float sum_sq;
+	float error;
 
-const unsigned X_ROWS = 1;
-const unsigned X_COLS = 400;
-const unsigned W_ROWS = 400;
-const unsigned W_COLS = 120;
-const unsigned Z_ROWS = X_ROWS;
-const unsigned Z_COLS = W_COLS;
+	Rmse(){ num_sq = 0; sum_sq = 0; error = 0; }
 
-// Define implementation type
-typedef float MATRIX_T;
+	float add_value(float d_n)
+	{
+		num_sq++;
+		sum_sq += (float)(d_n*d_n);
+		error = sqrtf(sum_sq / num_sq);
+		return error;
+	}
+};
 
-void matrix_multiply_top(const MATRIX_T X [X_ROWS][X_COLS],
-                         const MATRIX_T W [W_ROWS][W_COLS],
-                         MATRIX_T Z[Z_ROWS][Z_COLS]);
+Rmse rmse;
 
-#endif
+int main (void){
+
+  int r, c;
+  OUTP_TYPE gold;
+  FILE *fp;
+
+  INPT_TYPE X[X_SIZE];
+  WGHT_TYPE W[W_ROWS][W_COLS];
+  OUTP_TYPE Z[Z_SIZE];
+
+  fp = fopen("input.dat", "r");
+  for (c = 0; c < X_SIZE; ++c) {
+    fscanf(fp, "%f\n", &X[c]);
+  }
+  fclose(fp);
+
+  fp = fopen("weights.dat", "r");
+  for (r = 0; r < W_ROWS; ++r) {
+	  for (c = 0; c < W_COLS; ++c) {
+		  fscanf(fp, "%f\n", &W[r][c]);
+	  }
+  }
+  fclose(fp);
+
+  vec_mat_mul(X, W, Z);
+
+  fp = fopen("out.gold.dat", "r");
+  for (c = 0; c < Z_SIZE; ++c) {
+    fscanf(fp, "%f\n", &gold);
+	rmse.add_value(Z[c] - gold);
+  }
+  fclose(fp);
+
+	// printing error results
+	printf("----------------------------------------------\n");
+	printf("   RMSE ");
+	printf("%0.15f\n", rmse.error);
+	printf("----------------------------------------------\n");
+
+	if (rmse.error > 0.1) {
+		fprintf(stdout, "*******************************************\n");
+		fprintf(stdout, "FAIL: Output DOES NOT match the golden output\n");
+		fprintf(stdout, "*******************************************\n");
+		return 1;
+	}else {
+		fprintf(stdout, "*******************************************\n");
+		fprintf(stdout, "PASS: The output matches the golden output!\n");
+		fprintf(stdout, "*******************************************\n");
+		return 0;
+	}
+}
