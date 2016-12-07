@@ -11,7 +11,7 @@ struct Rmse
 
 	Rmse(){ num_sq = 0; sum_sq = 0; error = 0; }
 
-	float add_value(OUTP_TYPE d_n)
+	float add_value(DTYPE d_n)
 	{
 		num_sq++;
 		sum_sq += (float)(d_n*d_n);
@@ -22,12 +22,12 @@ struct Rmse
 
 Rmse rmse;
 
-INPT_TYPE In[SFMX_SIZE], Out[SFMX_SIZE];
+DTYPE In[SFMX_SIZE], Out[SFMX_SIZE];
 
 int main()
 {
 	int r,c;
-	OUTP_TYPE gold;
+	DTYPE gold;
 	FILE *fp;
 	fp = fopen("input.dat", "r");
 	for(r=0; r < SFMX_SIZE; ++r) {

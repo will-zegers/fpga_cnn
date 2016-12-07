@@ -41,7 +41,7 @@ struct Rmse
 
 	Rmse(){ num_sq = 0; sum_sq = 0; error = 0; }
 
-	float add_value(float d_n)
+	float add_value(DTYPE d_n)
 	{
 		num_sq++;
 		sum_sq += (float)(d_n*d_n);
@@ -55,12 +55,12 @@ Rmse rmse;
 int main (void){
 
   int r, c;
-  OUTP_TYPE gold;
+  DTYPE gold;
   FILE *fp;
 
-  INPT_TYPE X[X_SIZE];
-  WGHT_TYPE W[W_ROWS][W_COLS];
-  OUTP_TYPE Z[Z_SIZE];
+  DTYPE X[X_SIZE];
+  DTYPE W[W_ROWS][W_COLS];
+  DTYPE Z[Z_SIZE];
 
   fp = fopen("input.dat", "r");
   for (c = 0; c < X_SIZE; ++c) {

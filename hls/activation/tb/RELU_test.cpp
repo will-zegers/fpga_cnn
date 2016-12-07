@@ -1,69 +1,44 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
+#include <cmath>
 #include "RELU.h"
 
-struct Rmse
-{
-	int num_sq;
-	float sum_sq;
-	float error;
+#define SIZE 1024
 
-	Rmse(){ num_sq = 0; sum_sq = 0; error = 0; }
+DTYPE In[SIZE], Out[SIZE];
 
-	float add_value(DTYPE d_n)
-	{
-		num_sq++;
-		sum_sq += (float)(d_n*d_n);
-		error = sqrtf(sum_sq / num_sq);
-		return error;
-	}
-};
-
-Rmse rmse;
-
-DTYPE In[nROWS][nCOLS], Out[nROWS][nCOLS];
-
-int main()
-{
-	int r,c;
-	DTYPE gold;
+int main() {
 	FILE *fp;
-	fp = fopen("input.dat", "r");
-	for(r=0; r<nROWS; r++) {
-		for (c = 0; c < nCOLS; c++) {
-			fscanf(fp, "%f\n", &In[r][c]);
+	for(int i=0; i<SIZE; i++)
+	{
+		In[i] = (i%2) ?  (float)sqrt((float)i) : (float)(-sqrt((float)i));
+		RELU(&(In[i]), &(Out[i]));
+	}
+		//Perform Bit Reverse
+
+
+	fp=fopen("out.dat", "w");
+	printf("Printing bit reverse output\n");
+	for(int i=0; i<SIZE; i++){
+			printf("%d, %f, %f\n",i,In[i], Out[i]);
+			fprintf(fp, "%d, %f, %f\n",i,In[i], Out[i]);
 		}
-	}
-	fclose(fp);
 
-	//Perform Bit Reverse
-	RELU(In, Out);
+		fclose(fp);
 
-	fp = fopen("out.gold.dat", "r");
-	for (r = 0; r < nROWS; ++r) {
-	  for (c = 0; c < nCOLS; ++c) {
-		  fscanf(fp, "%f\n", &gold);
-		  rmse.add_value(Out[r][c] - gold);
-	  }
-	}
-	fclose(fp);
-
-	// printing error results
-	printf("----------------------------------------------\n");
-	printf("   RMSE ");
-	printf("%0.15f\n", rmse.error);
-	printf("----------------------------------------------\n");
-
-	if (rmse.error > 0.1) {
+		//Check against golden output.
+		printf ("Comparing against output data \n");
+	  if (system("diff -w out.dat out.gold.dat")) {
 		fprintf(stdout, "*******************************************\n");
 		fprintf(stdout, "FAIL: Output DOES NOT match the golden output\n");
 		fprintf(stdout, "*******************************************\n");
-		return 1;
-	}else {
+	     return 1;
+	  } else {
 		fprintf(stdout, "*******************************************\n");
 		fprintf(stdout, "PASS: The output matches the golden output!\n");
 		fprintf(stdout, "*******************************************\n");
-		return 0;
+	     return 0;
+	  }
+
+
 	}
-}

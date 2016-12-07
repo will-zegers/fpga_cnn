@@ -1,12 +1,12 @@
-#include <stdio.h>
 #include "conv.h"
+#include <stdint.h>
 
 void convolution_node(
-		INPT_TYPE channels[N_CHNLS][X_ROWS][X_COLS],
-		WGHT_TYPE filters[N_CHNLS][W_ROWS][W_COLS],
-		OUTP_TYPE Y[Y_ROWS][Y_COLS]) {
+		DTYPE channels[N_CHNLS][X_ROWS][X_COLS],
+		DTYPE filters[N_CHNLS][W_ROWS][W_COLS],
+		DTYPE Y[Y_ROWS][Y_COLS]) {
 
-	int i, r, c;
+	uint8_t i, r, c;
 
 	for (r = 0; r < Y_ROWS; ++r) {
 		for (c = 0; c < Y_COLS; ++c) {
@@ -21,11 +21,11 @@ void convolution_node(
 
 
 void convolve(
-		INPT_TYPE X[X_ROWS][X_COLS],
-		WGHT_TYPE W[W_ROWS][W_COLS],
-		OUTP_TYPE Y[Y_ROWS][Y_COLS]) {
+		DTYPE X[X_ROWS][X_COLS],
+		DTYPE W[W_ROWS][W_COLS],
+		DTYPE Y[Y_ROWS][Y_COLS]) {
 
-	int i, j, k, m;
+	uint8_t i, j, k, m;
 
 	for (i = 0; i < X_ROWS - W_ROWS + 1; i += STRIDE) {
 		for (j = 0, k = 0, m = 0; j < X_COLS - W_COLS + 1; j += STRIDE) {

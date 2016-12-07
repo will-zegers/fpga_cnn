@@ -1,4 +1,5 @@
 #include "POOLING.h"
+#include <stdint.h>
 
 #define max(a,b) \
 ({ __typeof__ (a) _a = (a); \
@@ -10,8 +11,11 @@ DTYPE maxFour(DTYPE a, DTYPE b, DTYPE c, DTYPE d) {
 }
 
 void POOLING(DTYPE in[SIZE][SIZE], DTYPE out[DOWNSIZE][DOWNSIZE]) {
-	for (int i = 0; i < DOWNSIZE; i++) {
-		for (int j = 0; j < DOWNSIZE; j++) {
+
+	uint8_t i, j;
+
+	for (i = 0; i < DOWNSIZE; i++) {
+		for (j = 0; j < DOWNSIZE; j++) {
 			out[i][j] = maxFour(
 					in[i * S][j * S],
 					in[i * S + 1][j * S],

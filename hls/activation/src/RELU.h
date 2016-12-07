@@ -1,11 +1,12 @@
 #ifndef RELU_H
 #define RELU_H
 
-typedef float DTYPE;
-typedef int INTTYPE;
+#include <stdint.h>
 
-const int nROWS = 400;
-const int nCOLS = 120;
+const uint16_t nROWS = 400;
+const uint8_t nCOLS = 120;
+
+typedef float DTYPE;
 
 void RELU(DTYPE in[nROWS][nCOLS], DTYPE out[nROWS][nCOLS]);
 

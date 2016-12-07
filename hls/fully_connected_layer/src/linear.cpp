@@ -1,12 +1,13 @@
 #include "linear.h"
-#include <stdio.h>
+#include <stdint.h>
 
 void vec_mat_mul(
-	INPT_TYPE X[X_SIZE],
-	WGHT_TYPE W[W_ROWS][W_COLS],
-	OUTP_TYPE Z[Z_SIZE]) {
+	DTYPE X[X_SIZE],
+	DTYPE W[W_ROWS][W_COLS],
+	DTYPE Z[Z_SIZE]) {
 
-	int i, r, c;
+	uint8_t c;
+	uint16_t r;
 
 	for (c = 0; c < W_COLS; ++c) {
 		Z[c] = 0;

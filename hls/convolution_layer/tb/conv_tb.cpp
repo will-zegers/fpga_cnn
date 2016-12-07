@@ -11,7 +11,7 @@ struct Rmse
 
 	Rmse(){ num_sq = 0; sum_sq = 0; error = 0; }
 
-	float add_value(OUTP_TYPE d_n)
+	float add_value(DTYPE d_n)
 	{
 		num_sq++;
 		sum_sq += (float)(d_n*d_n);
@@ -26,9 +26,9 @@ int main() {
 	int r, c;
 	int success;
 	const float ERROR_THRESHOLD = 1e-3;
-	INPT_TYPE channels[N_CHNLS][X_ROWS][X_COLS];
-	WGHT_TYPE filters[N_CHNLS][W_ROWS][W_COLS];
-	OUTP_TYPE out[Y_ROWS][Y_COLS], gold;
+	DTYPE channels[N_CHNLS][X_ROWS][X_COLS];
+	DTYPE filters[N_CHNLS][W_ROWS][W_COLS];
+	DTYPE out[Y_ROWS][Y_COLS], gold;
 	FILE *fp;
 
 	fp = fopen("channel0.dat", "r");

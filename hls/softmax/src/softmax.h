@@ -1,11 +1,12 @@
 #ifndef SOFTMAX_H
 #define SOFTMAX_H
 
-typedef float INPT_TYPE;
-typedef float OUTP_TYPE;
+#include <stdint.h>
 
-const int SFMX_SIZE = 10;
-const int RESOLUTION = 4000;
+typedef float DTYPE;
 
-void softmax(INPT_TYPE Z[SFMX_SIZE], OUTP_TYPE P[SFMX_SIZE]);
+const uint8_t SFMX_SIZE = 10;
+const uint16_t RESOLUTION = 4000;
+
+void softmax(DTYPE Z[SFMX_SIZE], DTYPE P[SFMX_SIZE]);
 #endif

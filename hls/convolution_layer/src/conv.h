@@ -1,28 +1,28 @@
 #ifndef CONV_H_
 #define CONV_H_
 
-const int STRIDE = 1;
-const int N_CHNLS = 3;
+#include <stdint.h>
 
-const int X_ROWS = 32;
-const int X_COLS = 32;
-const int W_ROWS = 5;
-const int W_COLS = 5;
-const int Y_ROWS = 1 + (X_ROWS - W_ROWS)/STRIDE;
-const int Y_COLS = 1 + (X_COLS - W_COLS)/STRIDE;
+typedef float DTYPE;
 
-typedef float INPT_TYPE;
-typedef float WGHT_TYPE;
-typedef float OUTP_TYPE;
+const uint8_t STRIDE = 1;
+const uint8_t N_CHNLS = 3;
+
+const uint8_t X_ROWS = 32;
+const uint8_t X_COLS = 32;
+const uint8_t W_ROWS = 5;
+const uint8_t W_COLS = 5;
+const uint8_t Y_ROWS = 1 + (X_ROWS - W_ROWS)/STRIDE;
+const uint8_t Y_COLS = 1 + (X_COLS - W_COLS)/STRIDE;
 
 void convolve(
-		INPT_TYPE X[X_ROWS][X_COLS],
-		WGHT_TYPE W[W_ROWS][W_COLS],
-		OUTP_TYPE Y[Y_ROWS][Y_COLS]);
+		DTYPE X[X_ROWS][X_COLS],
+		DTYPE W[W_ROWS][W_COLS],
+		DTYPE Y[Y_ROWS][Y_COLS]);
 
 void convolution_node(
-		INPT_TYPE channels[N_CHNLS][X_ROWS][X_COLS],
-		WGHT_TYPE filters[N_CHNLS][W_ROWS][W_COLS],
-		OUTP_TYPE Y[Y_ROWS][Y_COLS]);
+		DTYPE channels[N_CHNLS][X_ROWS][X_COLS],
+		DTYPE filters[N_CHNLS][W_ROWS][W_COLS],
+		DTYPE Y[Y_ROWS][Y_COLS]);
 
 #endif

@@ -1,19 +1,20 @@
 #ifndef LINEAR_H
 #define LINEAR_H
 
-typedef float INPT_TYPE;
-typedef float WGHT_TYPE;
-typedef WGHT_TYPE OUTP_TYPE;
+#include <stdint.h>
 
-const int X_SIZE = 400;
-const int W_ROWS = 400;
-const int W_COLS = 120;
-const int Z_SIZE = W_COLS;
-const int MAT_SIZE = W_ROWS * W_COLS;
+typedef float DTYPE;
+
+const uint16_t X_SIZE = 400;
+const uint16_t W_ROWS = 400;
+const uint8_t W_COLS = 120;
+const uint8_t Z_SIZE = W_COLS;
+
+const uint16_t MAT_SIZE = W_ROWS * W_COLS;
 
 void vec_mat_mul(
-		INPT_TYPE X[X_SIZE],
-		WGHT_TYPE W[W_ROWS][W_COLS],
-		OUTP_TYPE Z[Z_SIZE]);
+		DTYPE X[X_SIZE],
+		DTYPE W[W_ROWS][W_COLS],
+		DTYPE Z[Z_SIZE]);
 
 #endif
