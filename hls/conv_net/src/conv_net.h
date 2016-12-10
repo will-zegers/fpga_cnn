@@ -1,9 +1,14 @@
 #ifndef CONV_NET_H
 #define CONV_NET_H
 
+#define NORMALIZED 1
+
 #include <stdint.h>
 
 typedef float DTYPE;
+
+const DTYPE MEAN = 25.509416422526;
+const DTYPE STDV = 70.180423838273;
 
 const uint8_t IMG_DMNIN = 32;
 const uint8_t IMG_CHANNELS = 1;
@@ -52,6 +57,10 @@ void xillybus_wrapper(float *in, float *out);
 DTYPE maxFour(DTYPE a, DTYPE b, DTYPE c, DTYPE d);
 
 void predict(DTYPE img[IMG_CHANNELS][IMG_DMNIN][IMG_DMNIN], DTYPE p[SFMX_SIZE]);
+
+void normalize(
+	DTYPE raw[IMG_CHANNELS][IMG_DMNIN][IMG_DMNIN],
+	DTYPE nml[IMG_CHANNELS][IMG_DMNIN][IMG_DMNIN]);
 
 void convolution_c1 (
 			  DTYPE    X[C1_N_CHAN][C1_X_DMNIN][C1_X_DMNIN],

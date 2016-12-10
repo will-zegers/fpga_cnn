@@ -1,6 +1,7 @@
 #include "conv_net.h"
 #include "weights.h"
 #include "biases.h"
+#include <stdio.h>
 
 void xillybus_wrapper(float *in, float *out) {
 #pragma AP interface ap_fifo port=in
@@ -30,6 +31,7 @@ void xillybus_wrapper(float *in, float *out) {
 void predict(DTYPE img[IMG_CHANNELS][IMG_DMNIN][IMG_DMNIN], DTYPE p[SFMX_SIZE]) {
 
 	int r, c;
+	DTYPE nml[IMG_CHANNELS][IMG_DMNIN][IMG_DMNIN];
 	DTYPE layer1_out[C1_N_FILTERS][C1_OUT_DMNIN][C1_OUT_DMNIN];
 	DTYPE layer2_out[C1_N_FILTERS][A1_ROWS][A1_COLS];
 	DTYPE layer3_out[C1_N_FILTERS][P1_DOWNSIZE][P1_DOWNSIZE];
@@ -43,7 +45,12 @@ void predict(DTYPE img[IMG_CHANNELS][IMG_DMNIN][IMG_DMNIN], DTYPE p[SFMX_SIZE]) 
 	DTYPE layer11_out[F2_ROWS];
 	DTYPE layer12_out[F3_ROWS];
 
+#if NORMALIZED
 	convolution_c1(img, weights_C1, layer1_out, biases_C1);
+#else
+	normalize(img, nml);
+	convolution_c1(nml, weights_C1, layer1_out, biases_C1);
+#endif
 	relu_a1(layer1_out, layer2_out);
 	pooling_p1(layer2_out, layer3_out);
 
