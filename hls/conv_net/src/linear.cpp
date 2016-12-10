@@ -11,8 +11,7 @@ void flatten(
 	for (i = 0, t = 0; i < C2_N_FILTERS; ++i) {
 		for (j = 0; j < P2_DOWNSIZE; ++j) {
 			for (k = 0; k < P2_DOWNSIZE; ++k) {
-				OUT[t] = IN[i][j][k];
-				t += 1;
+				OUT[t++] = IN[i][j][k];
 			}
 		}
 	}
