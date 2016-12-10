@@ -2,6 +2,31 @@
 #include "weights.h"
 #include "biases.h"
 
+void xillybus_wrapper(float *in, float *out) {
+#pragma AP interface ap_fifo port=in
+#pragma AP interface ap_fifo port=out
+#pragma AP interface ap_ctrl_none port=return
+
+	   uint8_t c,i,l,r;
+
+	   DTYPE img[IMG_CHANNELS][IMG_DMNIN][IMG_DMNIN];
+       DTYPE p[SFMX_SIZE];
+
+       for (l = 0; l < IMG_CHANNELS; ++l) {
+    	   for (r = 0; r < IMG_DMNIN; ++r) {
+    		   for (c = 0; c < IMG_DMNIN; ++c) {
+    		     img[l][r][c] = (DTYPE)*in++;
+    		   }
+    	   }
+       }
+
+       predict(img,p);
+
+       for (i = 0; i < SFMX_SIZE; ++i) {
+    	   *out++ = (float)p[i];
+       }
+}
+
 void predict(DTYPE img[IMG_CHANNELS][IMG_DMNIN][IMG_DMNIN], DTYPE p[SFMX_SIZE]) {
 
 	int r, c;

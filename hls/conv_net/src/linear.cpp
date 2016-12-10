@@ -41,6 +41,7 @@ void vec_mat_mul_f3(
 	const DTYPE W[F3_ROWS][F3_COLS],
 	const DTYPE bias[F3_ROWS],
 	      DTYPE Z[F3_ROWS]) {
+#pragma HLS INLINE
 
 	uint8_t r, c;
 

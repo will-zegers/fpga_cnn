@@ -47,6 +47,8 @@ const uint8_t F3_COLS = 84;
 const uint8_t SFMX_SIZE = 10;
 const uint16_t SFMX_RES = 400;
 
+void xillybus_wrapper(float *in, float *out);
+
 DTYPE maxFour(DTYPE a, DTYPE b, DTYPE c, DTYPE d);
 
 void predict(DTYPE img[IMG_CHANNELS][IMG_DMNIN][IMG_DMNIN], DTYPE p[SFMX_SIZE]);
