@@ -59,61 +59,61 @@ DTYPE maxFour(DTYPE a, DTYPE b, DTYPE c, DTYPE d);
 void predict(DTYPE img[IMG_CHANNELS][IMG_DMNIN][IMG_DMNIN], DTYPE p[SFMX_SIZE]);
 
 void normalize(
-	DTYPE raw[IMG_CHANNELS][IMG_DMNIN][IMG_DMNIN],
-	DTYPE nml[IMG_CHANNELS][IMG_DMNIN][IMG_DMNIN]);
+    DTYPE raw[IMG_CHANNELS][IMG_DMNIN][IMG_DMNIN],
+    DTYPE nml[IMG_CHANNELS][IMG_DMNIN][IMG_DMNIN]);
 
 void convolution_c1 (
-			  DTYPE    X[C1_N_CHAN][C1_X_DMNIN][C1_X_DMNIN],
-		const DTYPE    W[C1_N_CHAN][C1_N_FILTERS][C1_W_DMNIN][C1_W_DMNIN],
-			  DTYPE  out[C1_N_FILTERS][C1_OUT_DMNIN][C1_OUT_DMNIN],
-		const DTYPE bias[C1_N_FILTERS]);
+              DTYPE    X[C1_N_CHAN][C1_X_DMNIN][C1_X_DMNIN],
+        const DTYPE    W[C1_N_CHAN][C1_N_FILTERS][C1_W_DMNIN][C1_W_DMNIN],
+              DTYPE  out[C1_N_FILTERS][C1_OUT_DMNIN][C1_OUT_DMNIN],
+        const DTYPE bias[C1_N_FILTERS]);
 
 void relu_a1(
-		DTYPE in[C1_N_FILTERS][A1_ROWS][A1_COLS],
-		DTYPE out[C1_N_FILTERS][A1_ROWS][A1_COLS]);
+        DTYPE in[C1_N_FILTERS][A1_ROWS][A1_COLS],
+        DTYPE out[C1_N_FILTERS][A1_ROWS][A1_COLS]);
 
 void pooling_p1(DTYPE in[C1_N_FILTERS][P1_SIZE][P1_SIZE],
-		DTYPE out[C1_N_FILTERS][P1_DOWNSIZE][P1_DOWNSIZE]);
+        DTYPE out[C1_N_FILTERS][P1_DOWNSIZE][P1_DOWNSIZE]);
 
 void convolution_c2 (
-			  DTYPE    X[C2_N_CHAN][C2_X_DMNIN][C2_X_DMNIN],
-		const DTYPE    W[C2_N_CHAN][C2_N_FILTERS][C2_W_DMNIN][C2_W_DMNIN],
-			  DTYPE  out[C2_N_FILTERS][C2_OUT_DMNIN][C2_OUT_DMNIN],
-		const DTYPE bias[C2_N_FILTERS]);
+              DTYPE    X[C2_N_CHAN][C2_X_DMNIN][C2_X_DMNIN],
+        const DTYPE    W[C2_N_CHAN][C2_N_FILTERS][C2_W_DMNIN][C2_W_DMNIN],
+              DTYPE  out[C2_N_FILTERS][C2_OUT_DMNIN][C2_OUT_DMNIN],
+        const DTYPE bias[C2_N_FILTERS]);
 
 void relu_a2(
-		DTYPE in[C2_N_FILTERS][A2_ROWS][A2_COLS],
-		DTYPE out[C2_N_FILTERS][A2_ROWS][A2_COLS]);
+        DTYPE in[C2_N_FILTERS][A2_ROWS][A2_COLS],
+        DTYPE out[C2_N_FILTERS][A2_ROWS][A2_COLS]);
 
 void pooling_p2(
-		DTYPE in[C2_N_FILTERS][P2_SIZE][P2_SIZE],
-		DTYPE out[C2_N_FILTERS][P2_DOWNSIZE][P2_DOWNSIZE]);
+        DTYPE in[C2_N_FILTERS][P2_SIZE][P2_SIZE],
+        DTYPE out[C2_N_FILTERS][P2_DOWNSIZE][P2_DOWNSIZE]);
 
 void flatten(
-		DTYPE IN[C2_N_FILTERS][P2_DOWNSIZE][P2_DOWNSIZE],
-		DTYPE OUT[FLAT_VEC_SZ]);
+        DTYPE IN[C2_N_FILTERS][P2_DOWNSIZE][P2_DOWNSIZE],
+        DTYPE OUT[FLAT_VEC_SZ]);
 
 void vec_mat_mul_f1(
-			  DTYPE X[FLAT_VEC_SZ],
-		const DTYPE W[F1_ROWS][F1_COLS],
-		const DTYPE bias[F1_ROWS],
-			  DTYPE Z[F1_ROWS]);
+              DTYPE X[FLAT_VEC_SZ],
+        const DTYPE W[F1_ROWS][F1_COLS],
+        const DTYPE bias[F1_ROWS],
+              DTYPE Z[F1_ROWS]);
 
 void relu_a3(DTYPE in[F1_ROWS], DTYPE out[F1_ROWS]);
 
 void vec_mat_mul_f2(
-	      DTYPE X[F1_ROWS],
-	const DTYPE W[F2_ROWS][F2_COLS],
-	const DTYPE bias[F2_ROWS],
-	      DTYPE Z[F2_ROWS]);
+          DTYPE X[F1_ROWS],
+    const DTYPE W[F2_ROWS][F2_COLS],
+    const DTYPE bias[F2_ROWS],
+          DTYPE Z[F2_ROWS]);
 
 void relu_a4(DTYPE in[F2_ROWS], DTYPE out[F2_ROWS]);
 
 void vec_mat_mul_f3(
-	      DTYPE X[F2_ROWS],
-	const DTYPE W[F3_ROWS][F3_COLS],
-	const DTYPE bias[F3_ROWS],
-	      DTYPE Z[F3_ROWS]);
+          DTYPE X[F2_ROWS],
+    const DTYPE W[F3_ROWS][F3_COLS],
+    const DTYPE bias[F3_ROWS],
+          DTYPE Z[F3_ROWS]);
 
 void softmax(DTYPE Z[SFMX_SIZE], DTYPE P[SFMX_SIZE]);
 

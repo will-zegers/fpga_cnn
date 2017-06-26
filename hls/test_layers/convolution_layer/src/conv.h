@@ -16,13 +16,13 @@ const uint8_t Y_ROWS = 1 + (X_ROWS - W_ROWS)/STRIDE;
 const uint8_t Y_COLS = 1 + (X_COLS - W_COLS)/STRIDE;
 
 void convolve(
-		DTYPE X[X_ROWS][X_COLS],
-		DTYPE W[W_ROWS][W_COLS],
-		DTYPE Y[Y_ROWS][Y_COLS]);
+        DTYPE X[X_ROWS][X_COLS],
+        DTYPE W[W_ROWS][W_COLS],
+        DTYPE Y[Y_ROWS][Y_COLS]);
 
 void convolution_node(
-		DTYPE channels[N_CHNLS][X_ROWS][X_COLS],
-		DTYPE filters[N_CHNLS][W_ROWS][W_COLS],
-		DTYPE Y[Y_ROWS][Y_COLS]);
+        DTYPE channels[N_CHNLS][X_ROWS][X_COLS],
+        DTYPE filters[N_CHNLS][W_ROWS][W_COLS],
+        DTYPE Y[Y_ROWS][Y_COLS]);
 
 #endif
